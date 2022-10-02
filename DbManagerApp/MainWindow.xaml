@@ -1,0 +1,138 @@
+﻿<Window x:Class="DbManagerApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DbManagerApp"
+        xmlns:vm ="clr-namespace:DbManagerApp.MVVM.ViewModels"
+        mc:Ignorable="d"
+        Title="Database Manager" ResizeMode="NoResize" Height="650" Width="1000">
+    <Window.DataContext>
+        <vm:MainViewModel/>
+    </Window.DataContext>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="280"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Panel.ZIndex="10" Grid.Row="0" Grid.Column="0" VerticalAlignment="Top"  Width="200" HorizontalAlignment="Center" >
+
+            <StackPanel Width="200">
+                <Label Content="DbManager"
+                   FontSize="26"
+                   FontWeight="ExtraLight"
+                   Foreground="#FF6F60FF"
+                       Width="200"
+                       HorizontalContentAlignment="Center"/>
+
+                <Label Content="by Mikołaj Kosiorek"
+                   Padding="0" FontSize="14" 
+                   FontWeight="ExtraLight" 
+                   Foreground="#FF707070"
+                   HorizontalAlignment="Center"/>
+            </StackPanel>
+
+        </StackPanel>
+
+        <Grid Grid.Column="0" Grid.RowSpan="2" Background="#FFF9F9F9" Panel.ZIndex="0">
+
+        </Grid>
+
+
+        <Grid Grid.Column="0" Grid.Row="1" Margin="20">
+            <StackPanel>
+                <Label Content="Select Table:" Foreground="#FF4D4D4D"/>
+                <ComboBox x:Name="selectTableCB" Margin="0 0 0 15"/>
+                
+                <Label Content="Database info:" Foreground="#FF4D4D4D"/>
+                <Border Margin="20 0 0 0" Padding="10" Height="200" BorderThickness="4 0 0 0" Background="AliceBlue" BorderBrush="#FFCBD2FF">
+                    <StackPanel>
+                        <Label Content="Database name:"
+                           Foreground="#FF4D4D4D"/>
+                        <TextBlock Text="main"
+                                   Margin="10 0 0 5" Foreground="#FF7782F5"/>
+
+                        <Label Content="Size:"
+                           Foreground="#FF4D4D4D"/>
+                        <TextBlock Text="main"
+                                   Margin="10 0 0 5" Foreground="#FF7782F5"/>
+
+                        <Label Content="Tables:"
+                           Foreground="#FF4D4D4D"/>
+                        <ListView 
+                                   Margin="10 0 0 5" Foreground="#FF7782F5"/>
+
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+            
+            
+        </Grid>
+        
+
+
+        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0 20 15 0">
+            <Label Content="DB Source:"
+                   VerticalContentAlignment="Center"
+                   FontSize="14"
+                   FontWeight="ExtraLight" Foreground="#FF686868"/>
+
+            <TextBox x:Name="databaseSourceTB" 
+                     VerticalContentAlignment="Center"
+                     Height="40"
+                     Width="560"
+                     BorderThickness="0 0 0 1"
+                     Padding="5 0 0 0"
+                     Background="WhiteSmoke" 
+                     Foreground="#FF616161" SelectionBrush="#FF575757"
+                     Text="{Binding selectedPathProp, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <Button Command="{Binding SelectFilePath}"
+                    Height="40"
+                    Width="40"
+                    Content="•••" 
+                    Foreground="#FF686868"
+                    BorderThickness="0 0 0 1" BorderBrush="#FFABADB3"/>
+        </StackPanel>
+
+        <Grid Grid.Row="1" Grid.Column="1" Margin="15">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button Command="{Binding SearchClick}" 
+                        Content="search" 
+                        Height="20"
+                        Width="60"
+                            Background="Transparent"
+                            BorderThickness="1 1 0 1" Foreground="#FF4D4D4D" BorderBrush="#FFABADB3"/>
+                    <Button Content="search" 
+                        Height="20"
+                        Width="60"
+                            Background="Transparent"
+                            BorderThickness="1 1 0 1" Foreground="#FF4D4D4D" BorderBrush="#FFABADB3"/>
+
+
+                    <Button Content="search" 
+                        Height="20"
+                        Width="60"
+                            Background="Transparent"
+                            BorderThickness="1" Foreground="#FF4D4D4D" BorderBrush="#FFABADB3"/>
+                    <TextBlock Text="{Binding testProp}"/>
+                </StackPanel>
+                
+
+                <DataGrid Background="White" 
+                      BorderThickness="0"
+                      />
+            </StackPanel>
+
+        </Grid>
+
+    </Grid>
+</Window>
