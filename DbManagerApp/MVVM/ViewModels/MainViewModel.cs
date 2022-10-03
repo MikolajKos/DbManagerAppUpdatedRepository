@@ -3,6 +3,7 @@ using DbManagerApp.MVVM.Models;
 using DbManagerApp.MVVM.Models.DataModels;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,16 +29,28 @@ namespace DbManagerApp.MVVM.ViewModels
             }
         }
 
-        public string testProp
+        public DataTable DataGridSource 
         {
             get
             {
-                return model.test;
+                return model.dataTb;
             }
             set
             {
-                model.test = value;
-                onPropertyChanged(nameof(testProp));
+                model.dataTb = value;
+                onPropertyChanged(nameof(DataGridSource));
+            }
+        }
+
+        public List<string> TbComboBoxSource 
+        {
+            get
+            {
+
+            }
+            set
+            {
+
             }
         }
 
@@ -70,8 +83,8 @@ namespace DbManagerApp.MVVM.ViewModels
                 if (searchClick == null) searchClick = new RelayCommand(
                     (object o) =>
                     {
-                        model.test = model.SearchData();
-                        onPropertyChanged(nameof(SearchClick), nameof(testProp));
+                        model.dataTb = model.SearchData(selectedPathProp);
+                        onPropertyChanged(nameof(SearchClick), nameof(selectedPathProp), nameof(DataGridSource));
                     },
                     (object o) =>
                     {

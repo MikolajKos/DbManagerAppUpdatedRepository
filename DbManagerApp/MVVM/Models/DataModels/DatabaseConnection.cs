@@ -23,7 +23,6 @@ namespace DbManagerApp.MVVM.Models.DataModels
             fileDialog.DefaultExt = ".db";
             fileDialog.ShowDialog();
             filePath = fileDialog.FileName;
-            MainModel model = new MainModel(filePath);
 
             return filePath;
         }

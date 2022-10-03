@@ -1,9 +1,12 @@
 ﻿using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace DbManagerApp.MVVM.Models
 {
@@ -11,28 +14,41 @@ namespace DbManagerApp.MVVM.Models
     {
         public string selectedFilePath;
         public string test = "lorem ipsum";
+        public DataTable dataTb;
 
-        public MainModel(string filePath = "")
+        public List<string> LoadComboBoxItems(string filePath = "")
         {
-            this.selectedFilePath = filePath;
+            List<string> itemsSource;
+            SQLiteConnection conn = new SQLiteConnection(@"DataSource=" + filePath);
+            conn.Open();
+
+            SQLiteCommand command = new SQLiteCommand();
+            command.Connection = conn;
+            command.CommandText = "SELECT name FROM sqlite_sequence";
+
+            conn.Close();
+
+            return itemsSource;
         }
 
-        public string SearchData()
-        {
-            string result ="Lorem Ipsum";
-            SqliteConnection conn = new SqliteConnection(@"DataSource=" + selectedFilePath);
-            conn.Open();
-            
-            SqliteCommand command = new SqliteCommand();
-            command.Connection = conn;
-            command.CommandText = "SELECT Age FROM Users WHERE Id = 2;";
-            using SqliteDataReader rdr = command.ExecuteReader();
-            
-            while (rdr.Read())
+        public DataTable SearchData(string filePath = "")
+        {   
+            try
             {
-                result = rdr.GetString(0);
+                SQLiteConnection conn = new SQLiteConnection(@"DataSource=" + filePath);
+                conn.Open();
+                SQLiteDataAdapter adapter = new SQLiteDataAdapter("SELECT * FROM Users;", conn);
+                DataTable dataTb = new DataTable();
+                adapter.Fill(dataTb);
+
+                conn.Close();
+                return dataTb;
             }
-            return result;
+            catch (Exception e)
+            {
+                MessageBox.Show("Please enter valid database file path.");
+                return null;
+            }
         }
     }
 }
