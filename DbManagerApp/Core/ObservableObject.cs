@@ -19,6 +19,6 @@ namespace DbManagerApp.Core
                     PropertyChanged(this, new PropertyChangedEventArgs(nazwaWlasnosci));
             }
         }
-        //test comment
+        
     }
 }
