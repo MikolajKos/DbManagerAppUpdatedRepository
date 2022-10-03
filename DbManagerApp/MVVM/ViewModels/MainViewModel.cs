@@ -46,11 +46,25 @@ namespace DbManagerApp.MVVM.ViewModels
         {
             get
             {
-
+                return model.itemsSource;
             }
             set
             {
+                model.itemsSource = value;
+                onPropertyChanged(nameof(TbComboBoxSource));
+            }
+        }
 
+        public string CbSelectedItem 
+        {
+            get
+            {
+                return model.comboBoxSelectedItem;
+            }
+            set
+            {
+                model.comboBoxSelectedItem = value;
+                onPropertyChanged(nameof(CbSelectedItem));
             }
         }
 
@@ -83,12 +97,16 @@ namespace DbManagerApp.MVVM.ViewModels
                 if (searchClick == null) searchClick = new RelayCommand(
                     (object o) =>
                     {
-                        model.dataTb = model.SearchData(selectedPathProp);
-                        onPropertyChanged(nameof(SearchClick), nameof(selectedPathProp), nameof(DataGridSource));
+                        //Loads table to DataGrid
+                        model.dataTb = model.SearchData(selectedPathProp, model.comboBoxSelectedItem);
+
+                        //Loads table names to ComboBox
+                        model.itemsSource = model.LoadComboBoxItems(selectedPathProp);
+                        onPropertyChanged(nameof(SearchClick), nameof(selectedPathProp), nameof(DataGridSource), nameof(TbComboBoxSource), nameof(CbSelectedItem));
                     },
                     (object o) =>
                     {
-                        return true;
+                            return true;
                     });
                 return searchClick;
             }

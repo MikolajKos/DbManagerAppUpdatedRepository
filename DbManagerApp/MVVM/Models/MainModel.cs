@@ -13,36 +13,58 @@ namespace DbManagerApp.MVVM.Models
     public class MainModel
     {
         public string selectedFilePath;
-        public string test = "lorem ipsum";
+        public string comboBoxSelectedItem = "";
         public DataTable dataTb;
+        public List<string> itemsSource = new List<string>();
 
         public List<string> LoadComboBoxItems(string filePath = "")
         {
-            List<string> itemsSource;
-            SQLiteConnection conn = new SQLiteConnection(@"DataSource=" + filePath);
-            conn.Open();
-
-            SQLiteCommand command = new SQLiteCommand();
-            command.Connection = conn;
-            command.CommandText = "SELECT name FROM sqlite_sequence";
-
-            conn.Close();
-
-            return itemsSource;
-        }
-
-        public DataTable SearchData(string filePath = "")
-        {   
             try
             {
                 SQLiteConnection conn = new SQLiteConnection(@"DataSource=" + filePath);
                 conn.Open();
-                SQLiteDataAdapter adapter = new SQLiteDataAdapter("SELECT * FROM Users;", conn);
-                DataTable dataTb = new DataTable();
-                adapter.Fill(dataTb);
+
+                string commandText = "SELECT name FROM sqlite_sequence";
+                SQLiteCommand command = new SQLiteCommand(commandText, conn);
+                SQLiteDataReader reader = command.ExecuteReader();
+                int columnCount = reader.FieldCount;
+                
+                while (reader.Read())
+                {
+                    itemsSource.Add(reader.GetString(0));
+                }
 
                 conn.Close();
-                return dataTb;
+
+                return itemsSource;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+
+        }
+
+        public DataTable SearchData(string filePath = "", string selectedTable = "")
+        {   
+            try
+            {
+                if (selectedTable == "")
+                {
+                    MessageBox.Show("Please select table.", "Select Table", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return null;
+                }
+                else
+                {
+                    SQLiteConnection conn = new SQLiteConnection(@"DataSource=" + filePath);
+                    conn.Open();
+                    SQLiteDataAdapter adapter = new SQLiteDataAdapter($"SELECT * FROM {selectedTable};", conn);
+                    DataTable dataTb = new DataTable();
+                    adapter.Fill(dataTb);
+
+                    conn.Close();
+                    return dataTb;
+                }
             }
             catch (Exception e)
             {

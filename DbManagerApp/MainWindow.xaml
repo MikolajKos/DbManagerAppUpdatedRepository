@@ -51,7 +51,8 @@
                 <Label Content="Select Table:" Foreground="#FF4D4D4D"/>
                 <ComboBox x:Name="selectTableCB"
                           Margin="0 0 0 15"
-                          ItemsSource="{Binding TbComboBoxSource}"/>
+                          ItemsSource="{Binding TbComboBoxSource}"
+                          SelectedItem="{Binding CbSelectedItem}"/>
                 
                 <Label Content="Database info:" Foreground="#FF4D4D4D"/>
                 <Border Margin="20 0 0 0" Padding="10" Height="200" BorderThickness="4 0 0 0" Background="AliceBlue" BorderBrush="#FFCBD2FF">
