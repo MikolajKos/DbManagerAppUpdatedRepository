@@ -101,7 +101,7 @@ namespace DbManagerApp.MVVM.ViewModels
                         model.dataTb = model.SearchData(selectedPathProp, model.comboBoxSelectedItem);
 
                         //Loads table names to ComboBox
-                        model.itemsSource = model.LoadComboBoxItems(selectedPathProp);
+                        //model.itemsSource = model.LoadComboBoxItems(selectedPathProp);
                         onPropertyChanged(nameof(SearchClick), nameof(selectedPathProp), nameof(DataGridSource), nameof(TbComboBoxSource), nameof(CbSelectedItem));
                     },
                     (object o) =>
@@ -109,6 +109,28 @@ namespace DbManagerApp.MVVM.ViewModels
                             return true;
                     });
                 return searchClick;
+            }
+        }
+
+
+        private ICommand loadTable = null;
+
+        public ICommand LoadTable
+        {
+            get
+            {
+                if (loadTable == null) loadTable = new RelayCommand(
+                    (object o) =>
+                    {
+                        //Loads table names to ComboBox
+                        model.itemsSource = model.LoadComboBoxItems(selectedPathProp);
+                        onPropertyChanged(nameof(SearchClick), nameof(selectedPathProp), nameof(DataGridSource), nameof(TbComboBoxSource), nameof(CbSelectedItem));
+                    },
+                    (object o) =>
+                    {
+                        return true;
+                    });
+                return loadTable;
             }
         }
     }

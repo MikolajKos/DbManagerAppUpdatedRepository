@@ -17,6 +17,9 @@ namespace DbManagerApp.MVVM.Models
         public DataTable dataTb;
         public List<string> itemsSource = new List<string>();
 
+        
+
+        //check if database path return value, if true load combobox items
         public List<string> LoadComboBoxItems(string filePath = "")
         {
             try
@@ -31,7 +34,15 @@ namespace DbManagerApp.MVVM.Models
                 
                 while (reader.Read())
                 {
-                    itemsSource.Add(reader.GetString(0));
+                    try
+                    {
+                        itemsSource.Add(reader.GetString(0));
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Please enter valid database path.", "Wrong path", MessageBoxButton.OK, MessageBoxImage.Information);
+                        break;
+                    }
                 }
 
                 conn.Close();
@@ -40,16 +51,19 @@ namespace DbManagerApp.MVVM.Models
             }
             catch (Exception e)
             {
+                MessageBox.Show("Please enter valid database path.", "Wrong path", MessageBoxButton.OK, MessageBoxImage.Information);
+
                 return null;
             }
 
         }
 
+         
         public DataTable SearchData(string filePath = "", string selectedTable = "")
         {   
             try
             {
-                if (selectedTable == "")
+                if (selectedTable == "" || selectedTable == null)
                 {
                     MessageBox.Show("Please select table.", "Select Table", MessageBoxButton.OK, MessageBoxImage.Information);
                     return null;

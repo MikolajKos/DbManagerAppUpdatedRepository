@@ -50,9 +50,19 @@
             <StackPanel>
                 <Label Content="Select Table:" Foreground="#FF4D4D4D"/>
                 <ComboBox x:Name="selectTableCB"
-                          Margin="0 0 0 15"
+                          Margin="0 0 0 5"
                           ItemsSource="{Binding TbComboBoxSource}"
                           SelectedItem="{Binding CbSelectedItem}"/>
+
+                <Grid HorizontalAlignment="Left">
+                    <Button Command="{Binding SearchClick}"
+                    Height="25"
+                    Width="80"
+                    Margin="0 0 0 0"
+                    Content="Load table" 
+                    Foreground="#FF686868"
+                    BorderThickness="4 0 0 0" BorderBrush="#FFABADB3"/>
+                </Grid>
                 
                 <Label Content="Database info:" Foreground="#FF4D4D4D"/>
                 <Border Margin="20 0 0 0" Padding="10" Height="200" BorderThickness="4 0 0 0" Background="AliceBlue" BorderBrush="#FFCBD2FF">
@@ -104,7 +114,7 @@
                     BorderThickness="0 0 0 1" BorderBrush="#FFABADB3"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0 20 15 0">
-                <Button Command="{Binding SearchClick}"
+                <Button Command="{Binding LoadTable}"
                     Height="30"
                     Width="80"
                         Margin="0 -10 0 0"
