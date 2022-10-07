@@ -128,7 +128,9 @@
 
         <Grid Grid.Row="1" Grid.Column="1" Margin="15">
             <StackPanel>
+                
                 <DataGrid Background="White" 
+                          CanUserDeleteRows="True"
                           BorderThickness="1"
                           BorderBrush="#FFE0E0E0"
                           MaxHeight="400"

@@ -12,8 +12,8 @@ namespace DbManagerApp.MVVM.ViewModels
 {
     public class MainViewModel : ObservableObject
     {
+        //Create MainModel object
         MainModel model = new MainModel();
-        //DatabaseConnection dataModel = new DatabaseConnection();
 
         public string selectedPathProp 
         {                                                              
@@ -67,6 +67,9 @@ namespace DbManagerApp.MVVM.ViewModels
             }
         }
 
+
+
+
         private ICommand selectFilePath = null;
 
         public ICommand SelectFilePath
@@ -87,6 +90,8 @@ namespace DbManagerApp.MVVM.ViewModels
                 return selectFilePath;
             }
         }
+
+
 
         private ICommand searchClick = null;
 
@@ -113,6 +118,7 @@ namespace DbManagerApp.MVVM.ViewModels
         }
 
 
+
         private ICommand loadTable = null;
 
         public ICommand LoadTable
@@ -133,6 +139,7 @@ namespace DbManagerApp.MVVM.ViewModels
                 return loadTable;
             }
         }
+
 
 
         private ICommand updateCommand = null;
