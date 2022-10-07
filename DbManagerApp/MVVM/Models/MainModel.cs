@@ -1,4 +1,4 @@
-﻿using Microsoft.Data.Sqlite;
+﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -17,43 +17,51 @@ namespace DbManagerApp.MVVM.Models
         public DataTable dataTb;
         public List<string> itemsSource = new List<string>();
 
-        
+        public SQLiteDataAdapter adapter;
 
-        //check if database path return value, if true load combobox items
-        public List<string> LoadComboBoxItems(string filePath = "")
+
+        //Load FileDialog, user can choose database path
+        public string SelectDatabaseFilePath()
+        {
+            OpenFileDialog fileDialog = new();
+
+            fileDialog.Multiselect = false;
+            fileDialog.Title = "Please select your database file.";
+            fileDialog.Filter = "Access files (*.db)|*.db";
+            fileDialog.DefaultExt = ".db";
+            fileDialog.ShowDialog();
+            selectedFilePath = fileDialog.FileName;
+
+            return selectedFilePath;
+        }
+
+        //loads ListView content
+
+        //check if database path return value, if true load combobox items (database tables)
+        public List<string> LoadComboBoxItems(string filePath)
         {
             try
             {
-                SQLiteConnection conn = new SQLiteConnection(@"DataSource=" + filePath);
+                string connectionString = $@"DataSource={filePath}";
+                SQLiteConnection conn = new SQLiteConnection(connectionString);
                 conn.Open();
+                adapter = new SQLiteDataAdapter($"SELECT name FROM sqlite_sequence;", conn);
+                DataTable dataTb = new DataTable();
+                adapter.Fill(dataTb);
 
-                string commandText = "SELECT name FROM sqlite_sequence";
-                SQLiteCommand command = new SQLiteCommand(commandText, conn);
-                SQLiteDataReader reader = command.ExecuteReader();
-                int columnCount = reader.FieldCount;
-                
-                while (reader.Read())
+                for (int i = 0; i < dataTb.Rows.Count; i++)
                 {
-                    try
-                    {
-                        itemsSource.Add(reader.GetString(0));
-                    }
-                    catch
-                    {
-                        MessageBox.Show("Please enter valid database path.", "Wrong path", MessageBoxButton.OK, MessageBoxImage.Information);
-                        break;
-                    }
+                    itemsSource.Add(dataTb.Rows[i]["name"].ToString());
                 }
 
                 conn.Close();
-
                 return itemsSource;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 MessageBox.Show("Please enter valid database path.", "Wrong path", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                return null;
+                
+                return itemsSource;
             }
 
         }
@@ -72,7 +80,7 @@ namespace DbManagerApp.MVVM.Models
                 {
                     SQLiteConnection conn = new SQLiteConnection(@"DataSource=" + filePath);
                     conn.Open();
-                    SQLiteDataAdapter adapter = new SQLiteDataAdapter($"SELECT * FROM {selectedTable};", conn);
+                    adapter = new SQLiteDataAdapter($"SELECT * FROM {selectedTable};", conn);
                     DataTable dataTb = new DataTable();
                     adapter.Fill(dataTb);
 
@@ -80,7 +88,7 @@ namespace DbManagerApp.MVVM.Models
                     return dataTb;
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 MessageBox.Show("Please enter valid database file path.");
                 return null;

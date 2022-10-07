@@ -1,6 +1,5 @@
 ﻿using DbManagerApp.Core;
 using DbManagerApp.MVVM.Models;
-using DbManagerApp.MVVM.Models.DataModels;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,17 +13,17 @@ namespace DbManagerApp.MVVM.ViewModels
     public class MainViewModel : ObservableObject
     {
         MainModel model = new MainModel();
-        DatabaseConnection dataModel = new DatabaseConnection();
+        //DatabaseConnection dataModel = new DatabaseConnection();
 
         public string selectedPathProp 
         {                                                              
             get                                                        
             {
-                return dataModel.filePath;           
+                return model.selectedFilePath;           
             }                                                           
             set                                                        
             {
-                dataModel.filePath = value;                        
+                model.selectedFilePath = value;                        
                 onPropertyChanged(nameof(selectedPathProp));           
             }
         }
@@ -77,7 +76,8 @@ namespace DbManagerApp.MVVM.ViewModels
                 if (selectFilePath == null) selectFilePath = new RelayCommand(
                     (object o) =>
                     {
-                        dataModel.filePath = dataModel.SelectDatabaseFilePath();
+                        model.selectedFilePath = model.SelectDatabaseFilePath();
+                        
                         onPropertyChanged(nameof(SelectFilePath), nameof(selectedPathProp));
                     },
                     (object o) =>
@@ -98,7 +98,7 @@ namespace DbManagerApp.MVVM.ViewModels
                     (object o) =>
                     {
                         //Loads table to DataGrid
-                        model.dataTb = model.SearchData(selectedPathProp, model.comboBoxSelectedItem);
+                        model.dataTb = model.SearchData(model.selectedFilePath, model.comboBoxSelectedItem);
 
                         //Loads table names to ComboBox
                         //model.itemsSource = model.LoadComboBoxItems(selectedPathProp);
@@ -123,8 +123,8 @@ namespace DbManagerApp.MVVM.ViewModels
                     (object o) =>
                     {
                         //Loads table names to ComboBox
-                        model.itemsSource = model.LoadComboBoxItems(selectedPathProp);
-                        onPropertyChanged(nameof(SearchClick), nameof(selectedPathProp), nameof(DataGridSource), nameof(TbComboBoxSource), nameof(CbSelectedItem));
+                        model.itemsSource = model.LoadComboBoxItems(model.selectedFilePath);
+                        onPropertyChanged(nameof(LoadTable), nameof(selectedPathProp), nameof(DataGridSource), nameof(TbComboBoxSource), nameof(CbSelectedItem));
                     },
                     (object o) =>
                     {
