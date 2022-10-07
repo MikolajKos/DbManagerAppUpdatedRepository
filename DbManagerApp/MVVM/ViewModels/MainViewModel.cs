@@ -27,7 +27,7 @@ namespace DbManagerApp.MVVM.ViewModels
                 onPropertyChanged(nameof(selectedPathProp));           
             }
         }
-
+        
         public DataTable DataGridSource 
         {
             get
@@ -131,6 +131,27 @@ namespace DbManagerApp.MVVM.ViewModels
                         return true;
                     });
                 return loadTable;
+            }
+        }
+
+
+        private ICommand updateCommand = null;
+
+        public ICommand UpdateCommand
+        {
+            get
+            {
+                if (updateCommand == null) updateCommand = new RelayCommand(
+                    (object o) =>
+                    {
+                        model.dataTb = model.UpdateQuery();
+                        onPropertyChanged(nameof(UpdateCommand), nameof(DataGridSource));
+                    },
+                    (object o) =>
+                    {
+                        return true;
+                    });
+                return updateCommand;
             }
         }
     }

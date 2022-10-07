@@ -12,12 +12,19 @@ namespace DbManagerApp.MVVM.Models
 {
     public class MainModel
     {
+        #region Model variables
+
         public string selectedFilePath;
         public string comboBoxSelectedItem = "";
-        public DataTable dataTb;
         public List<string> itemsSource = new List<string>();
 
         public SQLiteDataAdapter adapter;
+        public SQLiteConnection conn;
+        public DataTable dataTb;
+        public SQLiteCommandBuilder commandBuilder;
+        public DataSet dataS;
+
+        #endregion
 
 
         //Load FileDialog, user can choose database path
@@ -42,11 +49,12 @@ namespace DbManagerApp.MVVM.Models
         {
             try
             {
+                List<string> lista = itemsSource;
                 string connectionString = $@"DataSource={filePath}";
-                SQLiteConnection conn = new SQLiteConnection(connectionString);
+                conn = new SQLiteConnection(connectionString);
                 conn.Open();
                 adapter = new SQLiteDataAdapter($"SELECT name FROM sqlite_sequence;", conn);
-                DataTable dataTb = new DataTable();
+                dataTb = new DataTable();
                 adapter.Fill(dataTb);
 
                 for (int i = 0; i < dataTb.Rows.Count; i++)
@@ -60,13 +68,14 @@ namespace DbManagerApp.MVVM.Models
             catch (Exception)
             {
                 MessageBox.Show("Please enter valid database path.", "Wrong path", MessageBoxButton.OK, MessageBoxImage.Information);
-                
+
+                itemsSource.Clear();
                 return itemsSource;
             }
 
         }
 
-         
+        //Search data depending on selected table in comboBox, by default selects table with table names 
         public DataTable SearchData(string filePath = "", string selectedTable = "")
         {   
             try
@@ -78,10 +87,10 @@ namespace DbManagerApp.MVVM.Models
                 }
                 else
                 {
-                    SQLiteConnection conn = new SQLiteConnection(@"DataSource=" + filePath);
+                    conn = new SQLiteConnection(@"DataSource=" + filePath);
                     conn.Open();
                     adapter = new SQLiteDataAdapter($"SELECT * FROM {selectedTable};", conn);
-                    DataTable dataTb = new DataTable();
+                    dataTb = new DataTable();
                     adapter.Fill(dataTb);
 
                     conn.Close();
@@ -93,6 +102,25 @@ namespace DbManagerApp.MVVM.Models
                 MessageBox.Show("Please enter valid database file path.");
                 return null;
             }
+        }
+
+        //Update Query
+        public DataTable UpdateQuery()
+        {
+            try
+            {
+                commandBuilder = new SQLiteCommandBuilder(adapter);
+                adapter.Update(dataTb);
+                MessageBox.Show("Updated successfully!", "Data Updated", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                return dataTb;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Something went wrong.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return dataTb;
+            }
+
         }
     }
 }
