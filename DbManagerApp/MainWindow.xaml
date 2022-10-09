@@ -137,30 +137,36 @@
                     <TabItem Padding="10" Header="Table View">
                         <StackPanel>
                             <DataGrid Background="White" 
-                          CanUserDeleteRows="True"
-                          BorderThickness="1"
-                          BorderBrush="#FFE0E0E0"
-                          MaxHeight="400"
-                          Margin="0 0 0 10" 
-                          ItemsSource="{Binding DataGridSource, UpdateSourceTrigger=PropertyChanged}"
-                          Foreground="#FF494949"
-                          MinColumnWidth="40"
-                          HorizontalGridLinesBrush="#FFA4A4A4"
-                          VerticalGridLinesBrush="#FFE0E0E0"
-                          AlternationCount="1"
-                          AlternatingRowBackground="AliceBlue"
-                          GridLinesVisibility="Vertical" RowHeight="40"
-                          VerticalContentAlignment="Center" ColumnHeaderHeight="40"/>
+                                      CanUserDeleteRows="True"
+                                      BorderThickness="1"
+                                      BorderBrush="#FFE0E0E0"
+                                      MaxHeight="400"
+                                      Margin="0 0 0 10" 
+                                      ItemsSource="{Binding DataGridSource, UpdateSourceTrigger=PropertyChanged}"
+                                      Foreground="#FF494949"
+                                      MinColumnWidth="40"
+                                      HorizontalGridLinesBrush="#FFA4A4A4"
+                                      VerticalGridLinesBrush="#FFE0E0E0"
+                                      AlternationCount="1"
+                                      AlternatingRowBackground="AliceBlue"
+                                      GridLinesVisibility="Vertical" RowHeight="40"
+                                      VerticalContentAlignment="Center" ColumnHeaderHeight="40"/>
 
                             <StackPanel Orientation="Horizontal">
                                 <Button Content="Update" 
-                            Height="30"
-                            Width="70"
-                            Background="Transparent"
-                            BorderThickness="1"
-                            Foreground="#FF4D4D4D"
-                            BorderBrush="#FFABADB3"
-                            Command="{Binding UpdateCommand}"/>
+                                        Height="30"
+                                        Width="70"
+                                        Background="Transparent"
+                                        BorderThickness="1"
+                                        Foreground="#FF4D4D4D"
+                                        BorderBrush="#FFABADB3"
+                                        Command="{Binding UpdateCommand}"/>
+
+                                <Label Content="*Press delete button to delete selected row."
+                                       Margin="10 0 0 0" 
+                                       Foreground="#FFA0A0A0"
+                                       FontSize="11"
+                                       VerticalContentAlignment="Center"/>
                             </StackPanel>
                         </StackPanel>
                     </TabItem>
@@ -173,6 +179,7 @@
                             <TextBox Height="360" 
                                      Margin="0 0 0 10"
                                      TextWrapping="Wrap"
+                                     AcceptsReturn="True"
                                      AcceptsTab="True"
                                      />
 

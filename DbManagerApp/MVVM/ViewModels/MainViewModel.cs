@@ -104,9 +104,6 @@ namespace DbManagerApp.MVVM.ViewModels
                     {
                         //Loads table to DataGrid
                         model.dataTb = model.SearchData(model.selectedFilePath, model.comboBoxSelectedItem);
-
-                        //Loads table names to ComboBox
-                        //model.itemsSource = model.LoadComboBoxItems(selectedPathProp);
                         onPropertyChanged(nameof(SearchClick), nameof(selectedPathProp), nameof(DataGridSource), nameof(TbComboBoxSource), nameof(CbSelectedItem));
                     },
                     (object o) =>

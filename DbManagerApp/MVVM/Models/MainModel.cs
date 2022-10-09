@@ -51,12 +51,12 @@ namespace DbManagerApp.MVVM.Models
             {
                 List<string> lista = new List<string>();
                 itemsSource.Clear();
-
+                dataTb = new DataTable();
                 string connectionString = $@"DataSource={filePath}";
                 conn = new SQLiteConnection(connectionString);
                 conn.Open();
                 adapter = new SQLiteDataAdapter($"SELECT name FROM sqlite_sequence;", conn);
-                dataTb = new DataTable();
+                
                 adapter.Fill(dataTb);
 
                 for (int i = 0; i < dataTb.Rows.Count; i++)
