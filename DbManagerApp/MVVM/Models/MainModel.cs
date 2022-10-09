@@ -49,7 +49,9 @@ namespace DbManagerApp.MVVM.Models
         {
             try
             {
-                List<string> lista = itemsSource;
+                List<string> lista = new List<string>();
+                itemsSource.Clear();
+
                 string connectionString = $@"DataSource={filePath}";
                 conn = new SQLiteConnection(connectionString);
                 conn.Open();
@@ -59,11 +61,11 @@ namespace DbManagerApp.MVVM.Models
 
                 for (int i = 0; i < dataTb.Rows.Count; i++)
                 {
-                    itemsSource.Add(dataTb.Rows[i]["name"].ToString());
+                    lista.Add(dataTb.Rows[i]["name"].ToString());
                 }
 
                 conn.Close();
-                return itemsSource;
+                return lista;
             }
             catch (Exception)
             {
@@ -100,7 +102,7 @@ namespace DbManagerApp.MVVM.Models
             catch (Exception)
             {
                 MessageBox.Show("Please enter valid database file path.");
-                return null;
+                return dataTb;
             }
         }
 

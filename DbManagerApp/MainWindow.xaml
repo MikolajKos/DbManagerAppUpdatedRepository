@@ -65,7 +65,7 @@
                 </Grid>
                 
                 <Label Content="Database info:" Foreground="#FF4D4D4D"/>
-                <Border Margin="20 0 0 0" Padding="10" Height="200" BorderThickness="4 0 0 0" Background="AliceBlue" BorderBrush="#FFCBD2FF">
+                <Border Margin="20 0 0 0" Padding="10" Height="auto" BorderThickness="4 0 0 0" Background="AliceBlue" BorderBrush="#FFCBD2FF">
                     <StackPanel>
                         <Label Content="Database name:"
                            Foreground="#FF4D4D4D"/>
@@ -80,7 +80,12 @@
                         <Label Content="Tables:"
                            Foreground="#FF4D4D4D"/>
                         <ListView ItemsSource="{Binding TbComboBoxSource, UpdateSourceTrigger=PropertyChanged}"
-                                   Margin="10 0 0 5" Foreground="#FF7782F5"/>
+                                   Margin="10 0 0 5" 
+                                  Foreground="#FF7782F5"
+                                  BorderThickness="0"
+                                  Background="Transparent"
+                                  Focusable="False"
+                                  IsHitTestVisible="False"/>
 
                     </StackPanel>
                 </Border>
@@ -128,8 +133,10 @@
 
         <Grid Grid.Row="1" Grid.Column="1" Margin="15">
             <StackPanel>
-                
-                <DataGrid Background="White" 
+                <TabControl Padding="0 10 0 0" BorderThickness="0" >
+                    <TabItem Padding="10" Header="Table View">
+                        <StackPanel>
+                            <DataGrid Background="White" 
                           CanUserDeleteRows="True"
                           BorderThickness="1"
                           BorderBrush="#FFE0E0E0"
@@ -145,8 +152,8 @@
                           GridLinesVisibility="Vertical" RowHeight="40"
                           VerticalContentAlignment="Center" ColumnHeaderHeight="40"/>
 
-                <StackPanel Orientation="Horizontal">
-                    <Button Content="Update" 
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="Update" 
                             Height="30"
                             Width="70"
                             Background="Transparent"
@@ -154,7 +161,36 @@
                             Foreground="#FF4D4D4D"
                             BorderBrush="#FFABADB3"
                             Command="{Binding UpdateCommand}"/>
-                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </TabItem>
+                    
+                    
+                    <TabItem Header="SQL" HorizontalAlignment="Left" Width="33">
+
+
+                        <StackPanel>
+                            <TextBox Height="360" 
+                                     Margin="0 0 0 10"
+                                     TextWrapping="Wrap"
+                                     AcceptsTab="True"
+                                     />
+
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="Execute" 
+                                        Height="30"
+                                        Width="70"
+                                        Background="Transparent"
+                                        BorderThickness="1"
+                                        Foreground="#FF4D4D4D"
+                                        BorderBrush="#FFABADB3"
+                                        Command="{Binding}"/>
+                            </StackPanel>
+
+                        </StackPanel>
+                    </TabItem>
+                </TabControl>
+
             </StackPanel>
 
         </Grid>

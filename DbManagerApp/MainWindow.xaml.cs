@@ -24,5 +24,15 @@ namespace DbManagerApp
         {
             InitializeComponent();
         }
+
+        private void Button_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+
+        }
+
+        private void Button_GotKeyboardFocus_1(object sender, KeyboardFocusChangedEventArgs e)
+        {
+
+        }
     }
 }

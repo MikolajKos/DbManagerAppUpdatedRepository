@@ -156,6 +156,8 @@ namespace DbManagerApp.MVVM.ViewModels
                     },
                     (object o) =>
                     {
+                        if (model.dataTb == null)
+                            return false;
                         return true;
                     });
                 return updateCommand;
