@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using DbManagerApp.DatabaseOperations;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -49,29 +50,15 @@ namespace DbManagerApp.MVVM.Models
         {
             try
             {
-                List<string> lista = new List<string>();
-                itemsSource.Clear();
-                dataTb = new DataTable();
-                string connectionString = $@"DataSource={filePath}";
-                conn = new SQLiteConnection(connectionString);
-                conn.Open();
-                adapter = new SQLiteDataAdapter($"SELECT name FROM sqlite_sequence;", conn);
+                MyDatabaseOperations dbOperations = new MyDatabaseOperations(filePath);
+                dbOperations.ConnectToDatabase(out conn);
                 
-                adapter.Fill(dataTb);
-
-                for (int i = 0; i < dataTb.Rows.Count; i++)
-                {
-                    lista.Add(dataTb.Rows[i]["name"].ToString());
-                }
-
-                conn.Close();
-                return lista;
+                //returns list of table names
+                return dbOperations.ReadTableNames(conn);
             }
             catch (Exception)
             {
                 MessageBox.Show("Please enter valid database path.", "Wrong path", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                itemsSource.Clear();
                 return itemsSource;
             }
 
