@@ -108,7 +108,7 @@ namespace DbManagerApp.MVVM.ViewModels
                     },
                     (object o) =>
                     {
-                            return true;
+                        return true;
                     });
                 return searchClick;
             }

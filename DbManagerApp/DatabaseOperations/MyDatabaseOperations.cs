@@ -49,5 +49,13 @@ namespace DbManagerApp.DatabaseOperations
 
             adapter.Fill(dataTable);
         }
+
+        //Selects table using table name
+        public void SelectTableData(SQLiteConnection conn, out DataTable dataTable, string selectedTable)
+        {
+            SQLiteDataAdapter adapter = new SQLiteDataAdapter($"SELECT * FROM {selectedTable};", conn);
+            dataTable = new DataTable();
+            adapter.Fill(dataTable);
+        }
     }
 }

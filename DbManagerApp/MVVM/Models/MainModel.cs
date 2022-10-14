@@ -43,7 +43,7 @@ namespace DbManagerApp.MVVM.Models
             return selectedFilePath;
         }
 
-        //loads ListView content
+        
 
         //check if database path return value, if true load combobox items (database tables)
         public List<string> LoadComboBoxItems(string filePath)
@@ -65,8 +65,10 @@ namespace DbManagerApp.MVVM.Models
         }
 
         //Search data depending on selected table in comboBox, by default selects table with table names 
-        public DataTable SearchData(string filePath = "", string selectedTable = "")
-        {   
+        public DataTable SearchData(string filePath, string selectedTable)
+        {
+            MyDatabaseOperations dbOperations = new MyDatabaseOperations(filePath);
+
             try
             {
                 if (selectedTable == "" || selectedTable == null)
@@ -76,11 +78,8 @@ namespace DbManagerApp.MVVM.Models
                 }
                 else
                 {
-                    conn = new SQLiteConnection(@"DataSource=" + filePath);
-                    conn.Open();
-                    adapter = new SQLiteDataAdapter($"SELECT * FROM {selectedTable};", conn);
-                    dataTb = new DataTable();
-                    adapter.Fill(dataTb);
+                    dbOperations.ConnectToDatabase(out conn);
+                    dbOperations.SelectTableData(conn, out dataTb, selectedTable);
 
                     conn.Close();
                     return dataTb;
