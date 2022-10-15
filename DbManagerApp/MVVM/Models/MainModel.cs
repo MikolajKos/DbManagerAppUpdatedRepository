@@ -97,6 +97,7 @@ namespace DbManagerApp.MVVM.Models
         {
             try
             {
+                //Will be moved to MyDatabaseOperations
                 commandBuilder = new SQLiteCommandBuilder(adapter);
                 adapter.Update(dataTb);
                 MessageBox.Show("Updated successfully!", "Data Updated", MessageBoxButton.OK, MessageBoxImage.Information);
