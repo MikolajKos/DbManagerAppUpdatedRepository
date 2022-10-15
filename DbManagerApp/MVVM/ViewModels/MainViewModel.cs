@@ -15,6 +15,7 @@ namespace DbManagerApp.MVVM.ViewModels
         //Create MainModel object
         MainModel model = new MainModel();
 
+        //Textbox Property
         public string selectedPathProp 
         {                                                              
             get                                                        
