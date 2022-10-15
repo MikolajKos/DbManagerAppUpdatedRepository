@@ -69,7 +69,7 @@ namespace DbManagerApp.MVVM.ViewModels
 
 
 
-
+        //Binded to button located next to textbox
         private ICommand selectFilePath = null;
 
         public ICommand SelectFilePath
@@ -93,6 +93,7 @@ namespace DbManagerApp.MVVM.ViewModels
 
 
 
+        //Binded to load table button
         private ICommand searchClick = null;
 
         public ICommand SearchClick
@@ -116,6 +117,7 @@ namespace DbManagerApp.MVVM.ViewModels
 
 
 
+        //Binded to search button
         private ICommand loadTable = null;
 
         public ICommand LoadTable
