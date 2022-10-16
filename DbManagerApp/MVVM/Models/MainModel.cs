@@ -67,6 +67,7 @@ namespace DbManagerApp.MVVM.Models
         //Search data depending on selected table in comboBox, by default selects table with table names 
         public DataTable SearchData(string filePath, string selectedTable)
         {
+            //Creating MyDatabaseOperations object
             MyDatabaseOperations dbOperations = new MyDatabaseOperations(filePath);
 
             try
